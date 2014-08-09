@@ -73,7 +73,7 @@ def int2gold(num):
 ##############################################################################
 
 #Link to trans.yml
-libpath = '/home/cchang5/GW2/trans.yml'
+libpath = './book.yml'
 
 file = open(libpath,'r')
 buylist=yaml.load(file)

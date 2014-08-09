@@ -1,0 +1,23 @@
+#Dictionary of transactions
+
+#Help:
+#spidyid - id for the item of interest. Go to www.gw2spidy.com, search for the item. The URL will say http://www.gw2spidy.com/item/XXXXX where XXXXX is the id.
+#buy_price - how much you bought the item for in the format g..gsscc (gold..gold,silversilver,coppercopper). For example. 23s00c = 2300.  If you bought a legendary, then 4023g12s99c = 40231299
+#buy_date - Day that you bought it. Figure this out later. Stupid timezones.
+
+#Format is as follows
+#spidyid:
+#  buy: buy_price
+#  date: buy_date
+
+43909: #lightening catcher
+   buy: 132801
+   date: 'place_holder'
+43903: #wind catcher
+   buy: 330110
+43906: #Sun catcher
+   buy: 121075
+63952: #Ley line warhorn
+   buy: 460905
+63963: #Ley line scepter
+   buy: 460101
