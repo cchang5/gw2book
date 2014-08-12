@@ -85,6 +85,8 @@ gw = Gw2Spidy()
 table = [['ITEM', 'BUY_PRICE', 'MIN_SALE', 'PROFIT(POST-TAX)', 'MAX_OFFER', 'PROFIT(POST-TAX)']]
 total_sale=0
 total_offer=0
+sale_sale=0
+offer_sale=0
 for item in itemlist:
 	get_item = gw.getItemData(item)
 	name = get_item['name']
@@ -93,8 +95,14 @@ for item in itemlist:
 	buy_price = buylist[item]['buy']
 	sale_profit = taxes(min_sale)-buy_price
 	offer_profit = taxes(max_offer)-buy_price
+	####################################
+	#counters
 	total_sale+=sale_profit
 	total_offer+=offer_profit
+	sale_sale+=taxes(min_sale)
+	offer_sale+=taxes(max_offer)
+	####################################
+	#conversions
 	buy_price = int2gold(buy_price)
 	min_sale = int2gold(min_sale)
 	sale_profit = int2gold(sale_profit)
@@ -102,6 +110,7 @@ for item in itemlist:
 	offer_profit = int2gold(offer_profit)
 	table.append([name, buy_price, min_sale, sale_profit, max_offer, offer_profit])
 table.append(['TOTAL_PROFIT', 'N/A', 'N/A', int2gold(total_sale), 'N/A', int2gold(total_offer)])
+table.append(['TOTAL_SALES', 'N/A', 'N/A', int2gold(sale_sale), 'N/A', int2gold(offer_sale)])
 out = sys.stdout
 pprint_table(out, table)
 
