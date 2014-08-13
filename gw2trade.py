@@ -82,11 +82,12 @@ file.close()
 
 itemlist = buylist.keys()
 gw = Gw2Spidy()
-table = [['ITEM', 'BUY_PRICE', 'MIN_SALE', 'PROFIT(POST-TAX)', 'MAX_OFFER', 'PROFIT(POST-TAX)']]
+table = [['ITEM', 'BUY_PRICE', 'MIN_SALE', 'PROFIT(POST-TAX)', '%_PROFIT', 'MAX_OFFER', 'PROFIT(POST-TAX)', '%_PROFIT']]
 total_sale=0
 total_offer=0
 sale_sale=0
 offer_sale=0
+total_buy=0
 for item in itemlist:
 	get_item = gw.getItemData(item)
 	name = get_item['name']
@@ -94,13 +95,16 @@ for item in itemlist:
 	max_offer = get_item['max_offer_unit_price']
 	buy_price = buylist[item]['buy']
 	sale_profit = taxes(min_sale)-buy_price
+	sale_percent = sale_profit/buy_price*100
 	offer_profit = taxes(max_offer)-buy_price
+	offer_percent = offer_profit/buy_price*100
 	####################################
 	#counters
 	total_sale+=sale_profit
 	total_offer+=offer_profit
 	sale_sale+=taxes(min_sale)
 	offer_sale+=taxes(max_offer)
+	total_buy+=buy_price
 	####################################
 	#conversions
 	buy_price = int2gold(buy_price)
@@ -108,9 +112,11 @@ for item in itemlist:
 	sale_profit = int2gold(sale_profit)
 	max_offer = int2gold(max_offer)
 	offer_profit = int2gold(offer_profit)
-	table.append([name, buy_price, min_sale, sale_profit, max_offer, offer_profit])
-table.append(['TOTAL_PROFIT', 'N/A', 'N/A', int2gold(total_sale), 'N/A', int2gold(total_offer)])
-table.append(['TOTAL_SALES', 'N/A', 'N/A', int2gold(sale_sale), 'N/A', int2gold(offer_sale)])
+	table.append([name, buy_price, min_sale, sale_profit, sale_percent, max_offer, offer_profit, offer_percent])
+sale_percent = total_sale/total_buy*100
+offer_percent = total_offer/total_buy*100
+table.append(['TOTAL_PROFIT', 'N/A', 'N/A', int2gold(total_sale), sale_percent, 'N/A', int2gold(total_offer), offer_percent])
+table.append(['TOTAL_SALES', 'N/A', 'N/A', int2gold(sale_sale),'N/A', 'N/A', int2gold(offer_sale),'N/A'])
 out = sys.stdout
 pprint_table(out, table)
 
